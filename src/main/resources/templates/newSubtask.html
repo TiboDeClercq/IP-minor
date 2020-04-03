@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h1>New Sub Task Form</h1>
+
+<div th:if="${masterTask == null}">
+    <p>Task does not exist! Cant create subtask for task that doesnt exist!</p>
+    <p><a href="#" th:href="@{/tasks/new}">Add a new Task here!</a></p>
+    <p><a href="#" th:href="@{/tasks}">Return to Task overview here!</a></p>
+</div>
+
+<div th:if="${masterTask != null}">
+
+    <h2>Creating subtask for following task: </h2>
+    <div class="postitlayout">
+        <p class="titletaskbold" th:text="${masterTask.title}"></p>
+        <p th:text="${masterTask.description}"></p>
+        <p th:text="${#temporals.format(masterTask.dateAndTimeOfTask, 'd MMMM yyyy @ HH:mm')}"></p>
+    </div>
+
+    <h2>Subtask form</h2>
+    <form method="post" action="/tasks/sub/newTask" th:object="${subTaskDTO}">
+        <label for="title" class="formtitle">Title</label>
+        <input id="title" type="text" th:field="*{title}">
+        <p th:errors="*{title}"></p>
+
+        <label for="description" class="formtitle">Description</label>
+        <textarea class="form-control" id="description" rows="5" th:field="*{description}"></textarea>
+        <p th:errors="*{description}"></p>
+
+        <input type="hidden" th:value="${masterTask.taskId}" name="taskId"/>
+        <input type="submit" value="Add Subtask">
+    </form>
+</body>
+</html>

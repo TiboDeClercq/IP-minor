@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h2>Delete task</h2>
+
+<div th:if="${taskToDelete == null}">
+    <p>Taak bestaat niet</p>
+    <p><a  href="#" th:href="@{/tasks/new}">Add task</a></p>
+    <p><a  href="#" th:href="@{/tasks}">Overview</a></p>
+</div>
+
+<div th:if="${taskToDelete != null}">
+    <p th:text="${taskToDelete.taskId} + ' with title ' + ${taskToDelete.title}"></p>
+
+    <form method="post" action="/tasks/delete">
+                <input type="radio" id="yes" name="confirmation" value="yes" checked>
+                <label for="yes">Yes</label><br>
+                <input type="radio" id="no" name="confirmation" value="no">
+                <label for="no">No</label><br>
+
+        <input type="hidden" th:value="${taskToDelete.taskId}" name="taskId"/>
+
+        <input type="submit" value="Confirmation">
+    </form>
+</div>
+</body>
+</html>

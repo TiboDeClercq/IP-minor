@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Detail</title>
+</head>
+<body>
+<h2>Details</h2>
+<div th:if="${task == null}">
+    <p>Task not found</p>
+    <p><a href="#" th:href="@{/tasks/new}"> Add a new Task here!</a></p>
+</div>
+
+<div th:if="${task != null}">
+    <div>
+        <p th:text="${task.title}"></p>
+        <p th:text="${task.description}"></p>
+        <p th:text="${#temporals.format(task.dateAndTimeOfTask, 'd MMMM yyyy  HH:mm')}"></p>
+    </div>
+
+    <div th:if="${subtaskList == null}">
+        <p>No subtasks for this task</p>
+    </div>
+
+    <div th:if="${subtaskList != null}">
+        <h2>Details</h2>
+        <table>
+            <thead>
+            <tr>
+                <th>Task title</th>
+                <th>Description</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="subtask : ${subtaskList}">
+                <td th:text="${subtask.title}"></td>
+                <td th:text="${subtask.description}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+</body>
+</html>

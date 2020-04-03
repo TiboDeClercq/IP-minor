@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Taskmanager</title>
+</head>
+<body>
+<h1>Taskmanager</h1>
+<div th:if="${tasks.isEmpty() == true}">
+    <p>No tasks left to do</p>
+</div>
+
+<div th:if="${!tasks.isEmpty()}">
+    <table>
+        <thead>
+        <tr>
+            <th>Naam</th>
+            <th>Datum</th>
+            <th>Details</th>
+            <th>Subtask</th>
+            <th>Edit</th>
+            <th>Verwijder</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="task : ${tasks}">
+            <td th:text="${task.title}"></td>
+            <td th:text="${#temporals.format(task.dateAndTimeOfTask, 'd MMMM yyyy  HH:mm')}"></td>
+            <td><a th:href="@{/tasks/{taskId}(taskId=${task.taskId})}">details</a></td>
+            <td><a th:href="@{/tasks/{taskId}/sub/create(taskId=${task.taskId})}">add subtask</a></td>
+            <td><a th:href="@{/tasks/edit/{taskId}(taskId=${task.taskId})}">edit</a></td>
+            <td><a th:href="@{/tasks/delete/{taskId}(taskId=${task.taskId})}">delete</a></td>
+        </tr>
+        </tbody>
+    </table>
+
+    <p><a th:href="@{/tasks/deleteall}">Verwijder alles</a></p>
+</div>
+
+<p><a th:href="@{/tasks/new}">Maak een nieuwe taak</a></p>
+
+</div>
+</div>
+</body>
+</html>

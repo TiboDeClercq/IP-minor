@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>New task</title>
+</head>
+<body>
+<h2>New Task Form</h2>
+
+<form method="post" action="/tasks/new" th:object="${taskDTO}">
+
+    <label for="title" class="formtitle">Title</label>
+    <input class="form-control" id="title" type="text" th:field="*{title}">
+    <div class="danger">
+        <p th:errors="*{title}"></p>
+    </div>
+    <label for="description" class="formtitle">Description</label>
+    <textarea class="form-control" id="description" rows="5" th:field="*{description}"></textarea>
+    <div class="danger">
+        <p th:errors="*{description}"></p>
+    </div>
+    <label for="dateAndTimeOfTask" class="formtitle">Due date:</label>
+    <input class="form-control" id="dateAndTimeOfTask" type="datetime-local" th:field="*{dateAndTimeOfTask}">
+    <div class="danger">
+        <p th:errors="*{dateAndTimeOfTask}"></p>
+    </div>
+
+    <input class="btn btn-secondary text-left btn-submit-custom" type="submit" value="Add Task">
+</form>
+</body>
+</html>
