@@ -1,45 +1,56 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title>Taskmanager</title>
-</head>
+
+<div th:replace="nav.html :: links">
+    <title>Overview</title>
+</div>
 <body>
-<h1>Taskmanager</h1>
-<div th:if="${tasks.isEmpty() == true}">
-    <p>No tasks left to do</p>
+<div th:replace="nav.html :: header"></div>
+<div class="container">
+    <h1>Taskmanager</h1>
+    <div th:if="${tasks.isEmpty() == true}">
+        <p>No tasks left to do</p>
+    </div>
+
+    <div th:if="${!tasks.isEmpty()}">
+        <table class="table table-hover">
+            <thead>
+            <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Naam</th>
+                <th scope="col">Datum</th>
+                <th scope="col"></th>
+                <th scope="col"></th>
+                <th scope="col"></th>
+                <th scope="col"></th>
+                <!--<th scope="col">Subtask</th>
+                <th scope="col">Edit</th>
+                <th scope="col">Verwijder</th>-->
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:scope="row" th:each="task : ${tasks}">
+                <td th:text="${task.taskId}"></td>
+                <td th:text="${task.title}"></td>
+                <td th:text="${#temporals.format(task.dateAndTimeOfTask, 'd MMMM yyyy  HH:mm')}"></td>
+                <td><a class="btn btn-outline-primary" th:href="@{/tasks/{taskId}(taskId=${task.taskId})}">Details</a>
+                </td>
+                <td><a class="btn btn-outline-primary" th:href="@{/tasks/{taskId}/sub/create(taskId=${task.taskId})}">Add
+                    subtask</a></td>
+                <td><a class="btn btn-outline-primary" th:href="@{/tasks/edit/{taskId}(taskId=${task.taskId})}">Edit</a>
+                </td>
+                <td><a class="btn btn-outline-danger"
+                       th:href="@{/tasks/delete/{taskId}(taskId=${task.taskId})}">Delete</a></td>
+            </tr>
+            </tbody>
+        </table>
+
+        <p><a class="btn btn-danger" th:href="@{/tasks/deleteall}">Verwijder alles</a></p>
+    </div>
+
+    <p><a class="btn btn-primary" th:href="@{/tasks/new}">Maak een nieuwe taak</a></p>
+
 </div>
 
-<div th:if="${!tasks.isEmpty()}">
-    <table>
-        <thead>
-        <tr>
-            <th>Naam</th>
-            <th>Datum</th>
-            <th>Details</th>
-            <th>Subtask</th>
-            <th>Edit</th>
-            <th>Verwijder</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="task : ${tasks}">
-            <td th:text="${task.title}"></td>
-            <td th:text="${#temporals.format(task.dateAndTimeOfTask, 'd MMMM yyyy  HH:mm')}"></td>
-            <td><a th:href="@{/tasks/{taskId}(taskId=${task.taskId})}">details</a></td>
-            <td><a th:href="@{/tasks/{taskId}/sub/create(taskId=${task.taskId})}">add subtask</a></td>
-            <td><a th:href="@{/tasks/edit/{taskId}(taskId=${task.taskId})}">edit</a></td>
-            <td><a th:href="@{/tasks/delete/{taskId}(taskId=${task.taskId})}">delete</a></td>
-        </tr>
-        </tbody>
-    </table>
-
-    <p><a th:href="@{/tasks/deleteall}">Verwijder alles</a></p>
-</div>
-
-<p><a th:href="@{/tasks/new}">Maak een nieuwe taak</a></p>
-
-</div>
-</div>
 </body>
 </html>

@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title>Edit task</title>
-</head>
+<div th:replace="nav.html :: links">
+    <title>Overview</title>
+</div>
 <body>
+<div th:replace="nav.html :: header"></div>
 <h2>Edit Task Form</h2>
 
 <div th:if="${taskDTO == null}">
