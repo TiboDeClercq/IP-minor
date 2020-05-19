@@ -7,9 +7,9 @@
 <body>
 <div th:replace="nav.html :: header"></div>
 <div class="container">
-    <h1>Taskmanager</h1>
+    <h1 th:text="#{overview.title}"></h1>
     <div th:if="${tasks.isEmpty() == true}">
-        <p>No tasks left to do</p>
+        <p th:text="#{overview.notask}"></p>
     </div>
 
     <div th:if="${!tasks.isEmpty()}">
@@ -17,8 +17,8 @@
             <thead>
             <tr>
                 <th scope="col">ID</th>
-                <th scope="col">Naam</th>
-                <th scope="col">Datum</th>
+                <th scope="col"th:text="#{overview.tasknaam}"></th>
+                <th scope="col" th:text="#{overview.taskdatum}">Datum</th>
                 <th scope="col"></th>
                 <th scope="col"></th>
                 <th scope="col"></th>
@@ -45,10 +45,10 @@
             </tbody>
         </table>
 
-        <p><a class="btn btn-danger" th:href="@{/tasks/deleteall}">Verwijder alles</a></p>
+        <p><a class="btn btn-danger"  th:href="@{/tasks/deleteall}" th:text="#{overview.deleteAll}"></a></p>
     </div>
 
-    <p><a class="btn btn-primary" th:href="@{/tasks/new}">Maak een nieuwe taak</a></p>
+    <p><a class="btn btn-primary" th:text="#{overview.newTask}" th:href="@{/tasks/new}" ></a></p>
 
 </div>
 

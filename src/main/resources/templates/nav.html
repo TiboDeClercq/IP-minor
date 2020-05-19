@@ -8,18 +8,63 @@
 </head>
 <body>
 <header th:fragment="nav">
-    <div  class="navbar navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand">Taskmanager</a>
+    <!--<div class="navbar navbar-expand-lg navbar-light bg-light">
+
         <ul class="nav">
             <li class="nav-item">
-                <a class="nav-link" th:href="@{/tasks/}">Overview</a>
+                <a class="nav-link" th:href="@{/tasks/}" th:text="#{nav.overview}"></a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" th:href="@{/tasks/new}">New Task</a>
+                <a class="nav-link" th:href="@{/tasks/new}" th:text="#{nav.newTask}"></a>
             </li>
-
+            <li><a class="nav-link" href="#" th:href="@{''(lang=en)}">English</a></li>
+            <li><a class="nav-link" href="#" th:href="@{''(lang=nl)}">Nederlands</a></li>
+            <li><a class="nav-link" href="#" th:href="@{''(lang=fr)}">Français</a></li>
         </ul>
     </div>
+    <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+                <a class="nav-link" href="#">Right</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">Link</a>
+            </li>
+        </ul>
+    </div>-->
+    <nav class="navbar navbar-expand-md navbar-dark bg-dark">
+        <div class="navbar-collapse collapse w-100 order-1 order-md-0 dual-collapse2">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item ">
+                    <a class="nav-link" th:href="@{/tasks/}" th:text="#{nav.overview}"></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/tasks/new}" th:text="#{nav.newTask}"></a>
+                </li>
+
+            </ul>
+        </div>
+        <div class="mx-auto order-0">
+            <a class="navbar-brand" th:text="#{nav.brand}"></a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".dual-collapse2">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+        </div>
+        <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                <li><a class="nav-link" href="#" th:href="@{''(lang=en)}">English</a></li>
+                </li>
+                <li class="nav-item">
+                <li><a class="nav-link" href="#" th:href="@{''(lang=nl)}">Nederlands</a></li>
+                </li>
+                <li class="nav-item">
+                <li><a class="nav-link" href="#" th:href="@{''(lang=fr)}">Français</a></li>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
 </header>
 </body>
 </html>

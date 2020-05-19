@@ -47,7 +47,7 @@ public class Controller {
             return "newTask";
         }
         taskService.addTask(taskDTO);
-        return "redirect:/tasks";
+        return "redirect:/tasks/";
     }
     //Edit a task
     @GetMapping("tasks/edit/{taskId}")
