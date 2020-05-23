@@ -86,7 +86,7 @@ public class Controller {
         if(confirmation.equals("yes")){
             taskService.removeTask(taskId);
         }
-        return "redirect:/tasks";
+        return "redirect:/tasks/";
     }
 
 
@@ -101,7 +101,7 @@ public class Controller {
         if(confirmation.equals("yes")){
             taskService.removeAllTasks();
         }
-        return "redirect:/tasks";
+        return "redirect:/tasks/";
     }
 
     @GetMapping("tasks/{taskId}/sub/create")
