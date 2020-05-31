@@ -11,13 +11,20 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import javax.validation.ConstraintViolation;
+import javax.validation.Validation;
+import javax.validation.Validator;
+import javax.validation.ValidatorFactory;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 public class TaskTest {
+    private Validator validator;
     @Autowired
     private TaskService ts;
 
@@ -64,6 +71,23 @@ public class TaskTest {
     }
 
     @Test
+    public void getters_Test() {
+        ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
+        validator = factory.getValidator();
+
+        TaskDTO taskDTO = new TaskDTO();
+        taskDTO.setTitle("Titel vd Taak");
+        taskDTO.setDescription("EEN super lange title wqqqqqqqqqqqqqqqqq");
+        taskDTO.setDateAndTimeOfTask(LocalDateTime.MIN);
+
+        Set<ConstraintViolation<TaskDTO>> violations = validator.validate(taskDTO);
+        assertTrue(violations.isEmpty());
+        assertEquals("Titel vd Taak", taskDTO.getTitle());
+        assertEquals("EEN super lange title wqqqqqqqqqqqqqqqqq", taskDTO.getDescription());
+        assertEquals(LocalDateTime.MIN, taskDTO.getDateAndTimeOfTask());
+    }
+
+    @Test
     public void getTask() {
         TaskDTO dto = new TaskDTO();
         dto.setTaskId(1);
@@ -74,33 +98,69 @@ public class TaskTest {
         ts.addTask(dto);
 
     }
-
     @Test
     public void legeLijstTaken() {
         List<Task> taken = ts.getTasks();
         assertTrue(taken.isEmpty());
     }
-    /*@Test
-    public void addSubtask() {
-        TaskDTO dto = new TaskDTO();
-        dto.setTaskId(1);
-        dto.setTitle("Eerste taak");
-        dto.setDescription("Beschrijving eerste taak");
-        dto.setDateAndTimeOfTask(LocalDateTime.now());
+    @Test
+    public void zonder_Date() {
+        ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
+        validator = factory.getValidator();
 
-        SubTaskDTO subTaskDTO = new SubTaskDTO();
-        subTaskDTO.setTitle("Test");
-        subTaskDTO.setDescription("beschrijving");
-        subTaskDTO.setSubtaskId(1);
+        TaskDTO taskDTO = new TaskDTO();
+        taskDTO.setTitle("Titel vd TAak");
+        taskDTO.setDescription("EEN super lange title wqqqqqqqqqqqqqqqqq");
+        taskDTO.setDateAndTimeOfTask(null);
+        Set<ConstraintViolation<TaskDTO>> errors = validator.validate(taskDTO);
+        assertFalse(errors.isEmpty());
+        assertEquals(1, errors.size());
+    }
+
+    @Test
+    public void Geen_Beschrijving() {
+        ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
+        validator = factory.getValidator();
+        TaskDTO taskDTO = new TaskDTO();
+        taskDTO.setTitle("titel");
+        taskDTO.setDescription("");
+        taskDTO.setDateAndTimeOfTask(LocalDateTime.MIN);
+        Set<ConstraintViolation<TaskDTO>> violations = validator.validate(taskDTO);
+        assertFalse(violations.isEmpty());
+        assertEquals(1, violations.size());
+    }
+
+    @Test
+    public void Geen_Titel() {
+        ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
+        validator = factory.getValidator();
+        TaskDTO taskDTO = new TaskDTO();
+        taskDTO.setTitle("");
+        taskDTO.setDescription("EEN super lange title wqqqqqqqqqqqqqqqqq");
+        taskDTO.setDateAndTimeOfTask(LocalDateTime.MIN);
+        Set<ConstraintViolation<TaskDTO>> violations = validator.validate(taskDTO);
+        assertFalse(violations.isEmpty());
+        assertEquals(1, violations.size());
+    }
+
+    @Test
+    public void Geen_Title_Geen_Beschijving_Geen_Datum() {
+        ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
+        validator = factory.getValidator();
+        TaskDTO taskDTO = new TaskDTO();
+        taskDTO.setTitle("");
+        taskDTO.setDescription("");
+        taskDTO.setDateAndTimeOfTask(null);
+        Set<ConstraintViolation<TaskDTO>> violations = validator.validate(taskDTO);
+        assertFalse(violations.isEmpty());
+        assertEquals(3, violations.size());
+    }
 
 
-        ts.addTask(dto);
 
-        ts.addSubTask(subTaskDTO, 1);
 
-        System.out.println(ts.getTasks().size());
-        System.out.println(ts.getSubTasks(1).size());
 
-    }*/
+
 
 }
+
